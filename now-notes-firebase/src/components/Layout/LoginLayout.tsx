@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import LoginForm from "../Form/LoginForm";
+import RegisterForm from "../Form/RegisterForm";
 
 export enum LoginState {
   LOGIN,
@@ -24,8 +26,16 @@ const LoginPage = () => {
               {/* span div */}
 
               {/* input div  */}
-              {loginState === LoginState.LOGIN ? "LOGIN FORM" : ""}
-              {loginState === LoginState.REGISTER ? "REGISTER FORM" : " "}
+              {loginState === LoginState.LOGIN ? (
+                <LoginForm stateHandler={stateChangeHandler} />
+              ) : (
+                ""
+              )}
+              {loginState === LoginState.REGISTER ? (
+                <RegisterForm stateHandler={stateChangeHandler} />
+              ) : (
+                " "
+              )}
               {loginState === LoginState.RESET_PASSWORD ? "RESET FORM" : ""}
             </div>
           </div>
