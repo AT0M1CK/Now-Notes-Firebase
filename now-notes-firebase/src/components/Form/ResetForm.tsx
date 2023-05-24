@@ -11,7 +11,7 @@ import MenuButton from "../MenuButton";
 
 const ResetForm = (props: { stateHandler: (newState: LoginState) => void }) => {
   const [resetInProgress, setResetInProgress] = useState(false);
-  const [resetMailSent, setResetMailSent] = useState(false);
+  const [resetMailSend, setResetMailSend] = useState(false);
   const [resetError, setResetError] = useState({ error: false, msg: "" });
   const {
     register,
@@ -32,7 +32,10 @@ const ResetForm = (props: { stateHandler: (newState: LoginState) => void }) => {
       // router.replace("/");
       console.log(user);
       setResetInProgress(true);
-      setResetMailSent(true);
+      setResetMailSend(true);
+      setTimeout(() => {
+        props.stateHandler(LoginState.LOGIN);
+      }, 3000);
     } catch (error: any) {
       setResetError({ error: true, msg: error.message });
       console.log(error);
@@ -111,7 +114,7 @@ const ResetForm = (props: { stateHandler: (newState: LoginState) => void }) => {
             </button>
           </div>
         </div>
-        {resetMailSent && (
+        {resetMailSend && (
           <div className="flex flex-col w-72 justify-center items-center text-white font-inter p-2 mb-2 mt-0.5 mx-2 bg-sky-600">
             <span className="text-center align-middle">
               A password reset link has been sent to your mail
