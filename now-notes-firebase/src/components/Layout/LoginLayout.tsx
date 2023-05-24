@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import LoginForm from "../Form/LoginForm";
 import RegisterForm from "../Form/RegisterForm";
+import ResetForm from "../Form/ResetForm";
 
 export enum LoginState {
   LOGIN,
@@ -36,7 +37,11 @@ const LoginPage = () => {
               ) : (
                 " "
               )}
-              {loginState === LoginState.RESET_PASSWORD ? "RESET FORM" : ""}
+              {loginState === LoginState.RESET_PASSWORD ? (
+                <ResetForm stateHandler={stateChangeHandler} />
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>

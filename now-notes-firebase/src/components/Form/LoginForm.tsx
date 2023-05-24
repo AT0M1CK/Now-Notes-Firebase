@@ -2,13 +2,22 @@ import { useState } from "react";
 import TextInput from "../TextInput";
 import { useForm } from "react-hook-form";
 import { LoginState } from "../Layout/LoginLayout";
+import MenuButton from "../MenuButton";
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
+import { auth } from "../../firebase/firebaseConfig";
 
 const LoginForm = (props: { stateHandler: (newState: LoginState) => void }) => {
   const [loginError, setLoginError] = useState({ error: false, msg: "" });
+  const [isSigningIn, setIsSigningIn] = useState(false);
+  const provider = new GoogleAuthProvider();
 
   const onFormSubmit = (data: any) => {
     console.log(data);
-    //    signIn(data.email, data.password);
+    signIn(data.email, data.password);
   };
 
   const {
@@ -17,6 +26,37 @@ const LoginForm = (props: { stateHandler: (newState: LoginState) => void }) => {
     formState: { errors },
     setError,
   } = useForm();
+
+  const signIn = async (email: string, password: string) => {
+    setIsSigningIn(true);
+    try {
+      const user = await signInWithEmailAndPassword(auth, email, password);
+      console.log(user);
+      // router.replace
+      setIsSigningIn(false);
+    } catch (error: any) {
+      setError(
+        "email",
+        { type: "custom", message: "user not found" },
+        { shouldFocus: true }
+      );
+      setLoginError({ error: true, msg: error.message });
+      console.log(error);
+    }
+  };
+
+  const signInWithGooglePopup = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential?.accessToken;
+      const user = result.user;
+      console.log(user);
+      //  router.replace("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -72,16 +112,22 @@ const LoginForm = (props: { stateHandler: (newState: LoginState) => void }) => {
             </div>
           )}
           {/* button */}
-          <button
+          <MenuButton
             type="submit"
-            className="bg-blue-500 rounded-md text-white p-2"
+            colorScheme="blue"
+            radius="md"
+            buttonSize="md"
+            variant="solid"
+            spinnerSize="sm"
+            isLoading={isSigningIn}
+            // leftIcon={<MdOutlineLogin size={23} />}
           >
             LOGIN
-          </button>
+          </MenuButton>
           <button
             className="mt-2 py-2 border text-center align-middle flex justify-center border-gray-500"
             onClick={() => {
-              //   signInWithGooglePopup();
+              signInWithGooglePopup();
             }}
           >
             Sign in with google
