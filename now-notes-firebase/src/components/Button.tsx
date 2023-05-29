@@ -12,6 +12,7 @@ export type ButtonPropsType = {
   shadowSize?: "xs" | "sm" | "md" | "lg" | "xl" | "normal" | "full" | "inner";
   isActive?: boolean;
   isLoading?: boolean;
+  padding: "small" | "normal";
   fullWidth?: boolean;
   radius?: "xs" | "sm" | "md" | "lg" | "xl" | "normal" | "full";
   children?: ReactNode;
@@ -33,6 +34,7 @@ const Button = (props: ButtonPropsType) => {
     shadowSize,
     icon,
     isDisabled,
+    padding,
     buttonSize,
     onClick,
   } = props;
@@ -53,6 +55,11 @@ const Button = (props: ButtonPropsType) => {
     sm: "text-sm",
     md: "text-md",
     lg: "text-lg",
+  };
+
+  const paddings = {
+    normal: "px-3 py-3",
+    small: "px-2 py-1",
   };
 
   const borderRadius = {
@@ -83,7 +90,7 @@ const Button = (props: ButtonPropsType) => {
       text_lighter: "text-white",
       text_darker: "text-gray-900",
       hover_darker: " hover:bg-gray-700 ",
-      hover_lighter: "hover:bg-gray-300",
+      hover_lighter: "hover:bg-gray-200",
       hover_text_lighter: "hover:text-gray-500",
       fill_lighter: "fill-white",
       fill_darker: "fill-gray-900",
@@ -129,7 +136,9 @@ const Button = (props: ButtonPropsType) => {
           className={`${
             iconOnly &&
             icon &&
-            "px-3 py-3 items-center flex justify-center  text-center"
+            `${
+              (paddings as any)[padding!]
+            } items-center flex justify-center  text-center`
           } ${
             icon &&
             !iconOnly &&
