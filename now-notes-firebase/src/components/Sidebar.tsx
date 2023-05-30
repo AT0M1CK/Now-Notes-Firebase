@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
 import { MenuItem } from "./Layout/MainLayout";
-import Button from "./Button";
+import Button from "./UI/Button";
 
 const Sidebar = (props: {
   menuList: MenuItem[];

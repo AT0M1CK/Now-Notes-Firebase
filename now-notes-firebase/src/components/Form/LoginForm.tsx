@@ -1,5 +1,5 @@
 import { useState } from "react";
-import TextInput from "../TextInput";
+import TextInput from "../UI/TextInput";
 import { useForm } from "react-hook-form";
 import { LoginState } from "../Layout/LoginLayout";
 import MenuButton from "../MenuButton";

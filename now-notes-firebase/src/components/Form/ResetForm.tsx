@@ -4,7 +4,7 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
 } from "firebase/auth";
-import TextInput from "../TextInput";
+import TextInput from "../UI/TextInput";
 import { useForm } from "react-hook-form";
 import { auth } from "../../firebase/firebaseConfig";
 import MenuButton from "../MenuButton";

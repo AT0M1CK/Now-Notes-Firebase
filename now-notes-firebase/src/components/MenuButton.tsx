@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import Spinner from "./Spinner";
+import Spinner from "./UI/Spinner";
 
 export type MenuButtonPropsType = {
   type: "button" | "submit" | "reset";

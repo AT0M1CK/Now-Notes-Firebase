@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { LoginState } from "../Layout/LoginLayout";
 import { useForm } from "react-hook-form";
-import TextInput from "../TextInput";
+import TextInput from "../UI/TextInput";
 import { auth } from "../../firebase/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import MenuButton from "../MenuButton";
