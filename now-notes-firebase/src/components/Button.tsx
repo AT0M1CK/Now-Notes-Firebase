@@ -22,6 +22,7 @@ export type ButtonPropsType = {
   radius?: "xs" | "sm" | "md" | "lg" | "xl" | "normal" | "full" | "rightFull";
   children?: ReactNode;
   onClick?: () => void;
+  onMenuClick?: (id: number) => void;
   customCssProps?: string;
 };
 
@@ -39,7 +40,10 @@ const Button = (props: ButtonPropsType) => {
     shadowSize,
     justifyContent,
     lightIcon,
+    onMenuClick,
+    isActive,
     icon,
+    buttonId,
     iconPaddingFull,
     isDisabled,
     padding,
@@ -116,10 +120,14 @@ const Button = (props: ButtonPropsType) => {
 
   const variants = {
     ghost: ` ${(colorSchemes as any)[colorScheme!].text_darker} ${
-      !isDisabled && (colorSchemes as any)[colorScheme!].hover_lighter
+      !isDisabled &&
+      !isActive &&
+      (colorSchemes as any)[colorScheme!].hover_lighter
     }`,
     iconOnly: ` ${(colorSchemes as any)[colorScheme!].text_darker} ${
-      !isDisabled && (colorSchemes as any)[colorScheme!].hover_lighter
+      !isDisabled &&
+      !isActive &&
+      (colorSchemes as any)[colorScheme!].hover_lighter
     } ${
       (colorSchemes as any)[colorScheme!].bg_lighter
     } text-slate-700 flex  text-xs shrink-0 `,
@@ -140,6 +148,7 @@ const Button = (props: ButtonPropsType) => {
         disabled={isDisabled}
         onClick={() => {
           if (onClick) onClick();
+          if (onMenuClick) onMenuClick(buttonId!);
         }}
         className={` ${customCssProps} ${
           (variants as any)[variant]
@@ -147,7 +156,9 @@ const Button = (props: ButtonPropsType) => {
           justifyContent
             ? `${(justifyContents as any)[justifyContent!]}`
             : "justify-center"
-        } text-center  align-middle font-inter font-medium flex-row  ${
+        } text-center ${
+          isActive ? "bg-keepYellow" : ""
+        } align-middle font-inter font-medium flex-row  ${
           (borderRadius as any)[radius!]
         } ${(shadowSizes as any)[shadowSize!]} ${
           (buttonSizes as any)[buttonSize!]

@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { MenuItem } from "./Layout/MainLayout";
 import Button from "./Button";
 
@@ -6,7 +6,13 @@ const Sidebar = (props: {
   menuList: MenuItem[];
   selectHandler?: (component: ReactNode) => void;
 }) => {
+  const [currentSelectedMenu, setCurrentSelectedMenu] = useState(0);
+
   const { menuList } = props;
+
+  const menuHandler = (id: number) => {
+    setCurrentSelectedMenu(id);
+  };
 
   //Build Menu items
   const buildMenu = () => {
@@ -26,7 +32,9 @@ const Sidebar = (props: {
             padding={"normal"}
             radius={"rightFull"}
             lightIcon
+            isActive={currentSelectedMenu === menuItem.id}
             fullWidth
+            onMenuClick={menuHandler}
             iconPaddingFull
             justifyContent={"start"}
             icon={menuItem.icon}
