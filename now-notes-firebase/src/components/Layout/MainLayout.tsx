@@ -15,7 +15,7 @@ export type MenuItem = {
 };
 
 const MainLayout = () => {
-  const menuIconSize = 25;
+  const menuIconSize = 24;
   // Menu List
   const menuList: MenuItem[] = [
     { id: 0, title: "Notes", icon: <MdLightbulbOutline size={menuIconSize} /> },

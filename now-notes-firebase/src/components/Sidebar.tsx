@@ -18,12 +18,12 @@ const Sidebar = (props: {
   const buildMenu = () => {
     return menuList.map((menuItem, index) => {
       return (
-        <div className=" my-2" key={index}>
+        <div className="" key={index}>
           {/* <span className="ml-5 text-xs font-semibold tracking-widest text-stoneGray">
                   
                 </span> */}
           <Button
-            customCssProps=""
+            customCssProps="font-medium text-sm"
             key={menuItem.id}
             buttonId={menuItem.id}
             type={"button"}
