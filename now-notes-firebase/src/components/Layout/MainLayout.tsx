@@ -2,12 +2,11 @@ import { ReactNode } from "react";
 import Header from "../Header";
 import Sidebar from "../Sidebar";
 import {
-  MdArchive,
-  MdDelete,
-  MdFileCopy,
-  MdLabel,
-  MdNotifications,
+  MdDeleteOutline,
+  MdOutlineNotifications,
+  MdLightbulbOutline,
 } from "react-icons/md";
+import { TbArchive, TbEdit } from "react-icons/tb";
 
 export type MenuItem = {
   id: number;
@@ -19,15 +18,15 @@ const MainLayout = () => {
   const menuIconSize = 25;
   // Menu List
   const menuList: MenuItem[] = [
-    { id: 0, title: "Notes", icon: <MdFileCopy size={menuIconSize} /> },
+    { id: 0, title: "Notes", icon: <MdLightbulbOutline size={menuIconSize} /> },
     {
       id: 1,
       title: "Reminders",
-      icon: <MdNotifications size={menuIconSize} />,
+      icon: <MdOutlineNotifications size={menuIconSize} />,
     },
-    { id: 2, title: "Labels", icon: <MdLabel size={menuIconSize} /> },
-    { id: 3, title: "Archive", icon: <MdArchive size={menuIconSize} /> },
-    { id: 4, title: "Trash", icon: <MdDelete size={menuIconSize} /> },
+    { id: 2, title: "Edit Labels", icon: <TbEdit size={menuIconSize} /> },
+    { id: 3, title: "Archive", icon: <TbArchive size={menuIconSize} /> },
+    { id: 4, title: "Trash", icon: <MdDeleteOutline size={menuIconSize} /> },
   ];
 
   return (
