@@ -3,9 +3,14 @@ import Spinner from "./Spinner";
 
 export type ButtonPropsType = {
   type: "submit" | "button" | "reset";
+  key?: number;
+  buttonId?: number;
   colorScheme: string;
   variant: string;
+  lightIcon?: boolean;
   iconOnly?: boolean;
+  iconPaddingFull?: boolean;
+  justifyContent?: "start" | "between" | "end";
   icon?: ReactNode;
   isDisabled?: boolean;
   buttonSize?: "xs" | "sm" | "md" | "lg";
@@ -14,7 +19,7 @@ export type ButtonPropsType = {
   isLoading?: boolean;
   padding: "small" | "normal";
   fullWidth?: boolean;
-  radius?: "xs" | "sm" | "md" | "lg" | "xl" | "normal" | "full";
+  radius?: "xs" | "sm" | "md" | "lg" | "xl" | "normal" | "full" | "rightFull";
   children?: ReactNode;
   onClick?: () => void;
   customCssProps?: string;
@@ -32,7 +37,10 @@ const Button = (props: ButtonPropsType) => {
     fullWidth,
     children,
     shadowSize,
+    justifyContent,
+    lightIcon,
     icon,
+    iconPaddingFull,
     isDisabled,
     padding,
     buttonSize,
@@ -70,6 +78,13 @@ const Button = (props: ButtonPropsType) => {
     xl: "rounded-xl",
     full: "rounded-full",
     normal: "rounded",
+    rightFull: "rounded-r-full",
+  };
+
+  const justifyContents = {
+    start: "justify-start",
+    between: "justify-between",
+    end: "justify-end",
   };
 
   const colorSchemes = {
@@ -79,6 +94,7 @@ const Button = (props: ButtonPropsType) => {
       border: "border-blue-500 ",
       text_lighter: "text-white",
       text_darker: "text-blue-500",
+      icon_lighter: "text-blue-200",
       hover_darker: " hover:bg-blue-400 ",
       hover_lighter: "hover:bg-blue-200",
       hover_text_lighter: "hover:text-blue-300",
@@ -89,6 +105,7 @@ const Button = (props: ButtonPropsType) => {
       border: "border-gray-900 ",
       text_lighter: "text-white",
       text_darker: "text-gray-900",
+      icon_lighter: "text-gray-600",
       hover_darker: " hover:bg-gray-700 ",
       hover_lighter: "hover:bg-gray-200",
       hover_text_lighter: "hover:text-gray-500",
@@ -126,7 +143,11 @@ const Button = (props: ButtonPropsType) => {
         }}
         className={` ${customCssProps} ${
           (variants as any)[variant]
-        } flex items-center justify-center text-center  align-middle font-inter font-medium flex-row  ${
+        } flex items-center ${
+          justifyContent
+            ? `${(justifyContents as any)[justifyContent!]}`
+            : "justify-center"
+        } text-center  align-middle font-inter font-medium flex-row  ${
           (borderRadius as any)[radius!]
         } ${(shadowSizes as any)[shadowSize!]} ${
           (buttonSizes as any)[buttonSize!]
@@ -143,6 +164,14 @@ const Button = (props: ButtonPropsType) => {
             icon &&
             !iconOnly &&
             "pl-4 pr-2 py-3 items-center flex justify-center  text-center"
+          } ${
+            icon &&
+            iconPaddingFull &&
+            "pl-7 pr-9 py-3 items-center flex justify-center  text-center"
+          } ${
+            lightIcon
+              ? `${(colorSchemes as any)[colorScheme!].icon_lighter}`
+              : ""
           }`}
         >
           {isLoading && icon ? getSpinner() : icon}
