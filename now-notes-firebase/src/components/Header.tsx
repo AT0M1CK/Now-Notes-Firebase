@@ -18,7 +18,7 @@ const Header = () => {
   return (
     <>
       <header>
-        <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
+        <nav className="bg-white border-gray-200 px-4 lg:px-6 py-1.5 dark:bg-gray-800">
           <div className="flex flex-row justify-between items-center w-full ">
             <div className="flex gap-20 items-center ">
               <div className="flex flex-row">
@@ -33,17 +33,19 @@ const Header = () => {
                   iconOnly
                   icon={<MdMenu size={24} />}
                 ></Button>
+                {/* add div instead of button */}
                 <Button
-                  customCssProps=" text-gray-800 text-sm font-semibold right-2.5 bottom-1"
+                  customCssProps="text-gray-500 text-xl font-medium"
                   type="button"
                   colorScheme="white"
                   radius="full"
                   variant="ghost"
                   padding="normal"
+                  lightIcon
                   buttonSize="lg"
-                  icon={<MdFileCopy size={21} />}
+                  icon={<MdFileCopy size={26} />}
                 >
-                  NOW NOTES
+                  Now Notes
                 </Button>
               </div>
               <div className="flex bg-gray-100 rounded-md py-1 px-2 flex-row w-128">

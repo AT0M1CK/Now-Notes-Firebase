@@ -39,7 +39,7 @@ const MainLayout = () => {
         <div className="flex-1 flex flex-col sm:flex-row">
           <main className="flex-1 bg-white"></main>
 
-          <nav className="order-first sm:w-72 bg-white">
+          <nav className="order-first pt-2 sm:w-72 bg-white">
             <Sidebar menuList={menuList} />
           </nav>
         </div>
