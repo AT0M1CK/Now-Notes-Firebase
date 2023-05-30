@@ -24,6 +24,7 @@ export default {
         paraBlue: "#3B71FD",
         divider: "#e8e9eb",
         menuBg: "#FCFBFC",
+        keepYellow: "#FEEFC3",
       },
       fontSize: {
         vsm: "0.6rem",
