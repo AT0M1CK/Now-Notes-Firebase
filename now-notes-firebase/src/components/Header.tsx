@@ -23,7 +23,7 @@ const Header = () => {
             <div className="flex gap-20 items-center ">
               <div className="flex flex-row">
                 <Button
-                  customCssProps=" text-gray-600 right-2.5 bottom-1"
+                  customCssProps=" text-gray-600  right-2.5 bottom-1"
                   type="button"
                   colorScheme="white"
                   radius="full"
@@ -34,7 +34,7 @@ const Header = () => {
                   icon={<MdMenu size={24} />}
                 ></Button>
                 <Button
-                  customCssProps=" text-gray-800 text-base right-2.5 bottom-1"
+                  customCssProps=" text-gray-800 text-sm font-semibold right-2.5 bottom-1"
                   type="button"
                   colorScheme="white"
                   radius="full"
