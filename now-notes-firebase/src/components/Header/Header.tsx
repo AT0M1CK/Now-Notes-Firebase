@@ -37,7 +37,11 @@ const Header = () => {
                   icon={<MdMenu size={24} />}
                 ></Button>
                 {/* add div instead of button */}
-                <div>{title}</div>
+                <div className=" flex flex-row text-center align-middle items-center rounded-md text-gray-600 justify-center whitespace-nowrap w-40">
+                  <span className="flex justify-center text-xl font-medium items-center">
+                    {title}
+                  </span>
+                </div>
                 {/* <Button
                   customCssProps="text-gray-500 text-xl font-medium"
                   type="button"
