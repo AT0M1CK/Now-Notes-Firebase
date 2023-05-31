@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import Header from "../Header/Header";
 import Sidebar from "../Sidebar";
 import {
@@ -7,6 +7,7 @@ import {
   MdLightbulbOutline,
 } from "react-icons/md";
 import { TbArchive, TbEdit } from "react-icons/tb";
+import { MainContext } from "../Contexts/MainContext";
 
 export type MenuItem = {
   id: number;
@@ -15,6 +16,12 @@ export type MenuItem = {
 };
 
 const MainLayout = () => {
+  const [headerTitle, setHeaderTitle] = useState("Now Notes");
+
+  const titleSetter = (title: string) => {
+    setHeaderTitle(title);
+  };
+
   const menuIconSize = 24;
   // Menu List
   const menuList: MenuItem[] = [
@@ -31,19 +38,23 @@ const MainLayout = () => {
 
   return (
     <>
-      <div className="min-h-screen font-inter flex flex-col">
-        <header className="border border-divider">
-          <Header />
-        </header>
+      <MainContext.Provider
+        value={{ title: headerTitle, setTitle: titleSetter }}
+      >
+        <div className="min-h-screen font-inter flex flex-col">
+          <header className="border border-divider">
+            <Header />
+          </header>
 
-        <div className="flex-1 flex flex-col sm:flex-row">
-          <main className="flex-1 bg-white"></main>
+          <div className="flex-1 flex flex-col sm:flex-row">
+            <main className="flex-1 bg-white"></main>
 
-          <nav className="order-first pt-2 sm:w-72 bg-white">
-            <Sidebar menuList={menuList} />
-          </nav>
+            <nav className="order-first pt-2 sm:w-72 bg-white">
+              <Sidebar menuList={menuList} />
+            </nav>
+          </div>
         </div>
-      </div>
+      </MainContext.Provider>
     </>
   );
 };

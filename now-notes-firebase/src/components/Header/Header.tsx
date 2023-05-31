@@ -1,6 +1,5 @@
 import {
   MdClose,
-  MdFileCopy,
   MdMenu,
   MdOutlineDashboardCustomize,
   MdRefresh,
@@ -9,12 +8,16 @@ import {
 } from "react-icons/md";
 import { TbUser } from "react-icons/tb";
 import Button from "../UI/Button";
+import { useContext } from "react";
+import { MainContext } from "../Contexts/MainContext";
+
 /**
  * header component for the dashboard
  *
  * @return {*}
  */
 const Header = () => {
+  const { title } = useContext(MainContext);
   return (
     <>
       <header>
@@ -34,7 +37,8 @@ const Header = () => {
                   icon={<MdMenu size={24} />}
                 ></Button>
                 {/* add div instead of button */}
-                <Button
+                <div>{title}</div>
+                {/* <Button
                   customCssProps="text-gray-500 text-xl font-medium"
                   type="button"
                   colorScheme="white"
@@ -46,7 +50,7 @@ const Header = () => {
                   icon={<MdFileCopy size={26} />}
                 >
                   Now Notes
-                </Button>
+                </Button> */}
               </div>
               <div className="flex bg-gray-100 rounded-md py-1 px-2 flex-row w-128">
                 <Button

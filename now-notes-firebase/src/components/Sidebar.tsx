@@ -1,17 +1,20 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useContext, useState } from "react";
 import { MenuItem } from "./Layout/MainLayout";
 import Button from "./UI/Button";
+import { MainContext } from "./Contexts/MainContext";
 
 const Sidebar = (props: {
   menuList: MenuItem[];
   selectHandler?: (component: ReactNode) => void;
 }) => {
+  const { setTitle } = useContext(MainContext);
   const [currentSelectedMenu, setCurrentSelectedMenu] = useState(0);
 
   const { menuList } = props;
 
   const menuHandler = (id: number) => {
     setCurrentSelectedMenu(id);
+    if (setTitle) setTitle(menuList[id].title);
   };
 
   //Build Menu items

@@ -134,7 +134,7 @@ const LoginForm = (props: { stateHandler: (newState: LoginState) => void }) => {
             Sign in with google
           </button> */}
           <Button
-            customCssProps="mt-5 "
+            customCssProps="mt-5 bg-gray-200 "
             type="button"
             variant="ghost"
             colorScheme="white"
@@ -146,7 +146,7 @@ const LoginForm = (props: { stateHandler: (newState: LoginState) => void }) => {
               </div>
             }
             shadowSize="sm"
-            buttonSize="lg"
+            buttonSize="md"
             onClick={() => {
               signInWithGooglePopup();
             }}
