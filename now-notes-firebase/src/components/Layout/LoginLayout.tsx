@@ -23,7 +23,7 @@ const LoginPage = () => {
       <div className="min-h-screen flex font-inter">
         <div className="flex-1 ...">
           <div className="flex flex-row min-h-screen shadow-inner bg-slate-500 justify-center items-center">
-            <div className="flex flex-col h-128 w-128 p-10 md:w-128 sm:w-96 m-10  justify-between rounded-lg shadow-xl items-center bg-gray-200">
+            <div className="flex flex-col h-128 w-128 p-10 md:w-128 sm:w-96 m-10  justify-between rounded-lg shadow-xl items-center bg-gray-300">
               {/* span div */}
 
               {/* input div  */}

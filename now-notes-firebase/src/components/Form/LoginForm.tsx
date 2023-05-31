@@ -9,6 +9,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
+import Button from "../UI/Button";
 
 const LoginForm = (props: { stateHandler: (newState: LoginState) => void }) => {
   const [loginError, setLoginError] = useState({ error: false, msg: "" });
@@ -65,7 +66,7 @@ const LoginForm = (props: { stateHandler: (newState: LoginState) => void }) => {
           <span>LOGIN</span>
         </div>
         <div className=" justify-center w-full flex flex-col p-2 ">
-          <div className="p-2">
+          <div className="pt-2">
             <TextInput
               type="text"
               colorScheme="white"
@@ -84,7 +85,7 @@ const LoginForm = (props: { stateHandler: (newState: LoginState) => void }) => {
               }}
             />
           </div>
-          <div className="p-2">
+          <div className="pb-2">
             {" "}
             <TextInput
               type="password"
@@ -124,14 +125,34 @@ const LoginForm = (props: { stateHandler: (newState: LoginState) => void }) => {
           >
             LOGIN
           </MenuButton>
-          <button
+          {/* <button
             className="mt-2 py-2 border text-center align-middle flex justify-center border-gray-500"
             onClick={() => {
               signInWithGooglePopup();
             }}
           >
             Sign in with google
-          </button>
+          </button> */}
+          <Button
+            customCssProps="mt-5 "
+            type="button"
+            variant="ghost"
+            colorScheme="white"
+            padding="normal"
+            radius="md"
+            icon={
+              <div className="h-8 w-8 rounded-full overflow-clip">
+                <img src="/src/assets/googleIcon.jpg" alt="googleIcon" />
+              </div>
+            }
+            shadowSize="sm"
+            buttonSize="lg"
+            onClick={() => {
+              signInWithGooglePopup();
+            }}
+          >
+            Sign in with Google
+          </Button>
         </div>{" "}
         {/* links div */}
         <div className="flex w-full flex-col  justify-center items-center p-2 my-2">

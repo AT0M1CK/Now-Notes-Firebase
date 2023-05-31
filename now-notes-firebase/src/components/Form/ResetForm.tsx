@@ -49,7 +49,7 @@ const ResetForm = (props: { stateHandler: (newState: LoginState) => void }) => {
           <span>SEND EMAIL</span>
         </div>
         <div className=" justify-center w-full flex flex-col p-2 ">
-          <div className="p-2">
+          <div className="pt-2">
             <TextInput
               type="text"
               colorScheme="white"

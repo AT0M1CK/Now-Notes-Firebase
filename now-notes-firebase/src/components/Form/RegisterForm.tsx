@@ -5,7 +5,6 @@ import TextInput from "../UI/TextInput";
 import { auth } from "../../firebase/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import MenuButton from "../MenuButton";
-import { MdOutlineLogin } from "react-icons/md";
 
 const RegisterForm = (props: { stateHandler: (state: LoginState) => void }) => {
   const [signUpError, setSignUpError] = useState({ error: false, msg: "" });
@@ -15,8 +14,6 @@ const RegisterForm = (props: { stateHandler: (state: LoginState) => void }) => {
     register,
     handleSubmit,
     formState: { errors },
-    formState,
-    setError,
   } = useForm();
 
   const onFormSubmit = (data: any) => {
@@ -49,7 +46,7 @@ const RegisterForm = (props: { stateHandler: (state: LoginState) => void }) => {
           <span>SIGN UP</span>
         </div>
         <div className=" justify-center w-full flex flex-col p-5 ">
-          <div className="p-2">
+          <div className="pt-2">
             <TextInput
               type="text"
               colorScheme="white"
@@ -68,7 +65,7 @@ const RegisterForm = (props: { stateHandler: (state: LoginState) => void }) => {
               }}
             />
           </div>
-          <div className="p-2">
+          <div className="pb-2">
             {" "}
             <TextInput
               type="password"
@@ -134,7 +131,12 @@ const RegisterForm = (props: { stateHandler: (state: LoginState) => void }) => {
           </div>
           <div className="flex flex-row justify-center items-center text-center align-middle">
             <span>Trouble signing in ? </span>
-            <button className="text-blue-600 font-semibold px-2">
+            <button
+              onClick={() => {
+                props.stateHandler(LoginState.RESET_PASSWORD);
+              }}
+              className="text-blue-600 font-semibold px-2"
+            >
               Click here
             </button>
           </div>

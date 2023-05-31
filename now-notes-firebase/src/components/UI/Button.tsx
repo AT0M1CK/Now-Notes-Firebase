@@ -105,7 +105,7 @@ const Button = (props: ButtonPropsType) => {
     },
     white: {
       bg_darker: "bg-gray-900",
-      bg_lighter: "bg-gray-200",
+      bg_lighter: "bg-gray-300",
       border: "border-gray-900 ",
       text_lighter: "text-white",
       text_darker: "text-gray-900",

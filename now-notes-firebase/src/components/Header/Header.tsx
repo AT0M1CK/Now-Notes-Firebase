@@ -8,7 +8,7 @@ import {
   MdSettings,
 } from "react-icons/md";
 import { TbUser } from "react-icons/tb";
-import Button from "./UI/Button";
+import Button from "../UI/Button";
 /**
  * header component for the dashboard
  *

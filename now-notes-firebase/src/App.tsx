@@ -6,8 +6,8 @@ function App() {
   return (
     <>
       <div className="">
-        {/* <LoginLayout /> */}
-        <MainLayout />
+        <LoginLayout />
+        {/* <MainLayout /> */}
       </div>
     </>
   );
