@@ -8,7 +8,7 @@ import {
 } from "react-icons/md";
 import { TbArchive, TbEdit } from "react-icons/tb";
 import { MainContext } from "../Contexts/MainContext";
-import NoteItem from "../UI/NoteItem";
+
 import NoteCreator from "../UI/NoteCreator";
 
 export type MenuItem = {
@@ -18,7 +18,7 @@ export type MenuItem = {
 };
 
 export type Note = {
-  id: number;
+  id: string;
   content: {
     header: string;
     body: {
@@ -52,35 +52,6 @@ const MainLayout = () => {
     { id: 4, title: "Trash", icon: <MdDeleteOutline size={menuIconSize} /> },
   ];
 
-  const notesList: Note[] = [
-    {
-      id: 1,
-      content: {
-        header: "Note 1",
-        body: {
-          bodyType: "plain",
-          bodyContent: "Welcome to my first note",
-        },
-      },
-      config: {
-        color: "#bebebe",
-      },
-    },
-    {
-      id: 2,
-      content: {
-        header: "Note 2",
-        body: {
-          bodyType: "plain",
-          bodyContent: "Welcome to my second note",
-        },
-      },
-      config: {
-        color: "#bebebe",
-      },
-    },
-  ];
-
   return (
     <>
       <MainContext.Provider
@@ -93,11 +64,8 @@ const MainLayout = () => {
 
           <div className="flex-1 flex flex-col sm:flex-row">
             <main className="flex-1 bg-white m-2">
-              <div className="flex justify-center m-3">
+              <div className="flex flex-col  m-3">
                 <NoteCreator />
-              </div>
-              <div className="flex flex-wrap">
-                <NoteItem notes={notesList} />
               </div>
             </main>
 
