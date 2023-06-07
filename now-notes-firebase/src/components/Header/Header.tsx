@@ -42,19 +42,7 @@ const Header = () => {
                     {title}
                   </span>
                 </div>
-                {/* <Button
-                  customCssProps="text-gray-500 text-xl font-medium"
-                  type="button"
-                  colorScheme="white"
-                  radius="full"
-                  variant="ghost"
-                  padding="normal"
-                  lightIcon
-                  buttonSize="lg"
-                  icon={<MdFileCopy size={26} />}
-                >
-                  Now Notes
-                </Button> */}
+                
               </div>
               <div className="flex bg-gray-100 rounded-md py-1 px-2 flex-row w-128">
                 <Button

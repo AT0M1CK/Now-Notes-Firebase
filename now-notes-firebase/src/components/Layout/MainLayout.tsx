@@ -8,11 +8,27 @@ import {
 } from "react-icons/md";
 import { TbArchive, TbEdit } from "react-icons/tb";
 import { MainContext } from "../Contexts/MainContext";
+import NoteItem from "../UI/NoteItem";
+import NoteCreator from "../UI/NoteCreator";
 
 export type MenuItem = {
   id: number;
   title: string;
   icon: ReactNode;
+};
+
+export type Note = {
+  id: number;
+  content: {
+    header: string;
+    body: {
+      bodyType: "task" | "plain";
+      bodyContent: string;
+    };
+  };
+  config: {
+    color: string;
+  };
 };
 
 const MainLayout = () => {
@@ -36,6 +52,35 @@ const MainLayout = () => {
     { id: 4, title: "Trash", icon: <MdDeleteOutline size={menuIconSize} /> },
   ];
 
+  const notesList: Note[] = [
+    {
+      id: 1,
+      content: {
+        header: "Note 1",
+        body: {
+          bodyType: "plain",
+          bodyContent: "Welcome to my first note",
+        },
+      },
+      config: {
+        color: "#bebebe",
+      },
+    },
+    {
+      id: 2,
+      content: {
+        header: "Note 2",
+        body: {
+          bodyType: "plain",
+          bodyContent: "Welcome to my second note",
+        },
+      },
+      config: {
+        color: "#bebebe",
+      },
+    },
+  ];
+
   return (
     <>
       <MainContext.Provider
@@ -47,7 +92,14 @@ const MainLayout = () => {
           </header>
 
           <div className="flex-1 flex flex-col sm:flex-row">
-            <main className="flex-1 bg-white"></main>
+            <main className="flex-1 bg-white m-2">
+              <div className="flex justify-center m-3">
+                <NoteCreator />
+              </div>
+              <div className="flex flex-wrap">
+                <NoteItem notes={notesList} />
+              </div>
+            </main>
 
             <nav className="order-first pt-2 sm:w-72 bg-white">
               <Sidebar menuList={menuList} />
