@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TextInput from "./TextInput";
 import { useForm } from "react-hook-form";
 import { Note } from "../Layout/MainLayout";
 import NoteList from "./NoteList";
+import { ref, push, set, get, child } from "firebase/database";
+import { database } from "../../firebase/firebaseConfig";
 
 const NoteCreator = () => {
   const [isCreating, setIsCreating] = useState(false);
@@ -58,14 +60,36 @@ const NoteCreator = () => {
       },
     };
     setNotesList([...notesList, note]);
+    const noteListRef = ref(database, "/Notes/active");
+    const newNoteRef = push(noteListRef);
+    set(newNoteRef, note);
   };
+
+  // const writeUserData = (header: string, description: string) => {
+  //   set(ref(database, "/Notes"), {
+  //     header: header,
+  //     description: description,
+  //   });
+  // };
 
   const onFormSubmit = (data: any) => {
     console.log(data);
     createNote(data.header, data.body);
     setValue("header", "");
     setValue("body", "");
+    // writeUserData(data.header, data.body);
   };
+
+  useEffect(() => {
+    const dbRef = ref(database);
+    get(child(dbRef, "/Notes/active")).then((snapshot) => {
+      if (snapshot.exists()) {
+        const activeNotes = Object.values(snapshot.val());
+        console.log(snapshot.val());
+        setNotesList(activeNotes as Note[]);
+      }
+    });
+  }, []);
 
   return (
     <>
