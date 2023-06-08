@@ -10,6 +10,9 @@ import { TbUser } from "react-icons/tb";
 import Button from "../UI/Button";
 import { useContext } from "react";
 import { MainContext } from "../Contexts/MainContext";
+import { auth } from "../../firebase/firebaseConfig";
+import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 /**
  * header component for the dashboard
@@ -18,6 +21,16 @@ import { MainContext } from "../Contexts/MainContext";
  */
 const Header = () => {
   const { title } = useContext(MainContext);
+
+  const navigate = useNavigate();
+
+  const signUserOut = () => {
+    signOut(auth).then(() => {
+      console.log("User signed out");
+      navigate("/");
+    });
+  };
+
   return (
     <>
       <header>
@@ -42,7 +55,6 @@ const Header = () => {
                     {title}
                   </span>
                 </div>
-                
               </div>
               <div className="flex bg-gray-100 rounded-md py-1 px-2 flex-row w-128">
                 <Button
@@ -121,6 +133,9 @@ const Header = () => {
                   type="button"
                   colorScheme="white"
                   radius="full"
+                  onClick={() => {
+                    signUserOut();
+                  }}
                   variant="ghost"
                   padding="normal"
                   buttonSize="lg"

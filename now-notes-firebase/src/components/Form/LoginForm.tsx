@@ -10,11 +10,14 @@ import {
 } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
 import Button from "../UI/Button";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = (props: { stateHandler: (newState: LoginState) => void }) => {
   const [loginError, setLoginError] = useState({ error: false, msg: "" });
   const [isSigningIn, setIsSigningIn] = useState(false);
   const provider = new GoogleAuthProvider();
+
+  const navigate = useNavigate();
 
   const onFormSubmit = (data: any) => {
     console.log(data);
@@ -35,6 +38,7 @@ const LoginForm = (props: { stateHandler: (newState: LoginState) => void }) => {
       console.log(user);
       // router.replace
       setIsSigningIn(false);
+      navigate("/Dashboard");
     } catch (error: any) {
       setError(
         "email",
@@ -54,6 +58,7 @@ const LoginForm = (props: { stateHandler: (newState: LoginState) => void }) => {
       const user = result.user;
       console.log(user);
       //  router.replace("/");
+      navigate("/dashboard");
     } catch (error) {
       console.log(error);
     }
