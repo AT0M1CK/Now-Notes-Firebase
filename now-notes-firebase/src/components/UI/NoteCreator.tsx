@@ -56,7 +56,7 @@ const NoteCreator = () => {
         },
       },
       config: {
-        color: "#bebebe",
+        color: "#ffffff",
       },
     };
     setNotesList([...notesList, note]);
@@ -95,7 +95,7 @@ const NoteCreator = () => {
     <>
       <div className="flex justify-center">
         <form onSubmit={handleSubmit(onFormSubmit)}>
-          <div className="flex flex-col justify-center px-4 py-3 rounded-md items-center shadow-md border">
+          <div className="flex flex-col mb-3 justify-center px-4 py-3 rounded-md items-center shadow-md border">
             {!isCreating && (
               <div
                 className="flex justify-start font-medium"

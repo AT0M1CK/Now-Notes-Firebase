@@ -54,10 +54,6 @@ const Sidebar = (props: {
       {/* <div className="justify-left relative flex h-14 flex-row items-center  border-b border-divider py-2 px-3 align-middle "></div> */}
       {/* {buildMenu()} */}
       {buildMenu()}
-      <div className="absolute bottom-0 flex w-64 flex-col border-t border-divider">
-        {/* <span className="text-center">LOGOUT</span> */}
-        {/* <Header /> */}
-      </div>
     </>
   );
 };

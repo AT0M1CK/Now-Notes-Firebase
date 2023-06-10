@@ -17,7 +17,7 @@ export type ButtonPropsType = {
   shadowSize?: "xs" | "sm" | "md" | "lg" | "xl" | "normal" | "full" | "inner";
   isActive?: boolean;
   isLoading?: boolean;
-  padding: "small" | "normal";
+  padding: "small" | "normal" | "rounded";
   fullWidth?: boolean;
   radius?: "xs" | "sm" | "md" | "lg" | "xl" | "normal" | "full" | "rightFull";
   children?: ReactNode;
@@ -72,6 +72,7 @@ const Button = (props: ButtonPropsType) => {
   const paddings = {
     normal: "px-3 py-3",
     small: "px-2 py-1",
+    rounded: "p-2",
   };
 
   const borderRadius = {

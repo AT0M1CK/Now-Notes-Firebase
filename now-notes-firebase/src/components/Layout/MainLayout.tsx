@@ -57,19 +57,19 @@ const MainLayout = () => {
       <MainContext.Provider
         value={{ title: headerTitle, setTitle: titleSetter }}
       >
-        <div className="min-h-screen font-inter flex flex-col">
-          <header className="border border-divider">
+        <div className="min-h-screen h-screen font-inter flex flex-col">
+          <header className="border border-divider sticky top-0 ">
             <Header />
           </header>
 
-          <div className="flex-1 flex flex-col sm:flex-row">
-            <main className="flex-1 bg-white m-2">
+          <div className="flex-1 flex flex-col overflow-y-hidden sm:flex-row">
+            <main className="flex-1 min-w-0 overflow-y-auto bg-white m-2">
               <div className="flex flex-col  m-3">
                 <NoteCreator />
               </div>
             </main>
 
-            <nav className="order-first pt-2 sm:w-72 bg-white">
+            <nav className="order-first flex-none pt-2 sm:w-72 bg-white">
               <Sidebar menuList={menuList} />
             </nav>
           </div>
