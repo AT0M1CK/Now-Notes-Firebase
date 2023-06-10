@@ -1,13 +1,9 @@
-import {
-  MdMoreVert,
-  MdOutlineArchive,
-  MdOutlineImage,
-  MdRefresh,
-} from "react-icons/md";
+import { MdMoreVert, MdOutlineArchive, MdOutlineImage } from "react-icons/md";
 import { Note } from "../Layout/MainLayout";
 import Button from "./Button";
-import { ReactNode } from "react";
+import { ReactNode, useContext } from "react";
 import { TbBellPlus, TbPalette, TbPinned, TbUserPlus } from "react-icons/tb";
+import { NoteCreatorContext } from "../Contexts/NoteCreatorContext";
 
 export type ActionsButtonType = {
   id: number;
@@ -16,6 +12,8 @@ export type ActionsButtonType = {
 };
 
 const NoteItem = (props: Note) => {
+  const { deleteNote } = useContext(NoteCreatorContext);
+
   //Actions Button List
   const actionsList: ActionsButtonType[] = [
     {
@@ -41,6 +39,9 @@ const NoteItem = (props: Note) => {
     {
       id: 5,
       icon: <MdMoreVert size={18} />,
+      actionCallback: () => {
+        if (deleteNote) deleteNote(props.id);
+      },
     },
   ];
 
@@ -56,6 +57,7 @@ const NoteItem = (props: Note) => {
           radius="full"
           variant="ghost"
           padding="rounded"
+          onClick={action.actionCallback}
           buttonSize="xs"
           iconOnly
           icon={action.icon}
