@@ -74,17 +74,19 @@ const NoteItem = (props: Note) => {
       >
         <div className="flex flex-row justify-between items-center align-middle py-2 font-medium">
           <div>{props.content.header}</div>
-          <Button
-            customCssProps=" text-gray-600 "
-            type="button"
-            colorScheme="white"
-            radius="full"
-            variant="ghost"
-            padding="rounded"
-            buttonSize="lg"
-            iconOnly
-            icon={<TbPinned size={23} />}
-          ></Button>
+          <div className="invisible group-hover:visible">
+            <Button
+              customCssProps=" text-gray-600 "
+              type="button"
+              colorScheme="white"
+              radius="full"
+              variant="ghost"
+              padding="rounded"
+              buttonSize="lg"
+              iconOnly
+              icon={<TbPinned size={23} />}
+            ></Button>
+          </div>
         </div>
         <div className="flex text-gray-800 pb-1 font-base">
           {props.content.body.bodyContent}
