@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { NoteCreatorContext } from "./Contexts/NoteCreatorContext";
 
 export type colorButtonType = {
@@ -6,8 +6,11 @@ export type colorButtonType = {
   color: string;
 };
 
-const ColorSelector = (props: { noteId: string }) => {
+const ColorSelector = (props: { noteId: string; noteColor: string }) => {
   const { changeColor } = useContext(NoteCreatorContext);
+  const [currentSelectedColor, setCurrentSelectedColor] = useState(
+    props.noteColor
+  );
 
   const colorButtonList: colorButtonType[] = [
     {
@@ -50,7 +53,9 @@ const ColorSelector = (props: { noteId: string }) => {
           onClick={() => {
             if (changeColor) changeColor(props.noteId, color.color);
           }}
-          className={`flex m-1 h-10 w-10 hover:border-2 ${"ring-2"} hover:border-gray-700 rounded-full`}
+          className={`flex m-1 h-10 w-10 hover:border-2 ${
+            currentSelectedColor === color.color && "ring-2"
+          } hover:border-gray-700 rounded-full`}
           style={{ backgroundColor: color.color }}
         />
       );

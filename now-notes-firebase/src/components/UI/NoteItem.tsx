@@ -57,7 +57,7 @@ const NoteItem = (props: Note) => {
             as="div"
             className="relative inline-block text-left"
           >
-            <Menu.Button>
+            <Menu.Button className="flex p-2 hover:bg-gray-200 rounded-full">
               <TbPalette size={18} />
               {/* <Button
                 customCssProps=" text-gray-600 "
@@ -74,7 +74,10 @@ const NoteItem = (props: Note) => {
             </Menu.Button>
             <Menu.Items>
               <Menu.Item as="div" className="absolute">
-                <ColorSelector noteId={props.id} />
+                <ColorSelector
+                  noteId={props.id}
+                  noteColor={props.config.color}
+                />
               </Menu.Item>
             </Menu.Items>
           </Menu>
