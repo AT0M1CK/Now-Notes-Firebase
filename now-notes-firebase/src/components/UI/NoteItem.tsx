@@ -98,6 +98,7 @@ const NoteItem = (props: Note) => {
         </div>
         <div className="mt-1 flex justify-between transition group-hover:visible invisible flex-row">
           {buildActionsList()}
+          {/* drop down actions */}
         </div>
       </div>
     </>

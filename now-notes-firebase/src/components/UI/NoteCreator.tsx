@@ -6,10 +6,12 @@ import NoteList from "./NoteList";
 import { ref, push, set, get, child, remove } from "firebase/database";
 import { database } from "../../firebase/firebaseConfig";
 import { NoteCreatorContext } from "../Contexts/NoteCreatorContext";
+import ColorSelector from "../ColorSelector";
 
 const NoteCreator = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [notesList, setNotesList] = useState<Note[]>([]);
+
   const {
     register,
     handleSubmit,
@@ -57,7 +59,7 @@ const NoteCreator = () => {
         },
       },
       config: {
-        color: "#ffffff",
+        color: "#ebd50e",
       },
     };
     setNotesList([...notesList, note]);
@@ -78,6 +80,8 @@ const NoteCreator = () => {
       }
     });
   };
+
+  //Change note background
 
   //Delete signle note
   const deleteSingleNote = async (id: string) => {
@@ -180,6 +184,7 @@ const NoteCreator = () => {
         </div>
         <div className="flex flex-wrap">
           <NoteList notes={notesList} />
+          <ColorSelector />
         </div>
       </NoteCreatorContext.Provider>
     </>
