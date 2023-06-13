@@ -3,7 +3,7 @@ import TextInput from "./TextInput";
 import { useForm } from "react-hook-form";
 import { Note } from "../Layout/MainLayout";
 import NoteList from "./NoteList";
-import { ref, push, set, get, child, remove } from "firebase/database";
+import { ref, push, set, get, child, remove, update } from "firebase/database";
 import { database } from "../../firebase/firebaseConfig";
 import { NoteCreatorContext } from "../Contexts/NoteCreatorContext";
 
@@ -53,6 +53,8 @@ const NoteManager = () => {
       if (note.id === id) {
         note.config.color = color;
         setNotesList(notesListCopy);
+        const noteRef = ref(database, `/Notes/active/${note.id}`);
+        update(noteRef, note);
       }
     });
   };
@@ -90,7 +92,11 @@ const NoteManager = () => {
     });
   };
 
-  //Change note background
+  //Update notes
+  const changeNoteColor = (id: string) => {
+    const newNoteKey = push(child(ref(database), `/Notes/active/${id}`)).key;
+    const updates = {};
+  };
 
   //Delete signle note
   const deleteSingleNote = async (id: string) => {
@@ -135,7 +141,6 @@ const NoteManager = () => {
         value={{
           deleteNote: deleteSingleNote,
           changeColor: colorChangeHandler,
-          notesList: notesList,
         }}
       >
         <div className="flex justify-center">
