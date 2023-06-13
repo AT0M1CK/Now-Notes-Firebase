@@ -4,6 +4,8 @@ import Button from "./Button";
 import { ReactNode, useContext } from "react";
 import { TbBellPlus, TbPalette, TbPinned, TbUserPlus } from "react-icons/tb";
 import { NoteCreatorContext } from "../Contexts/NoteCreatorContext";
+import { Menu } from "@headlessui/react";
+import ColorSelector from "../ColorSelector";
 
 export type ActionsButtonType = {
   id: number;
@@ -48,6 +50,35 @@ const NoteItem = (props: Note) => {
   //Build actions panel
   const buildActionsList = () => {
     return actionsList.map((action) => {
+      if (action.id === 2)
+        return (
+          <Menu
+            key={action.id}
+            as="div"
+            className="relative inline-block text-left"
+          >
+            <Menu.Button>
+              <TbPalette size={18} />
+              {/* <Button
+                customCssProps=" text-gray-600 "
+                type="button"
+                colorScheme="white"
+                radius="full"
+                variant="ghost"
+                padding="rounded"
+                onClick={action.actionCallback}
+                buttonSize="xs"
+                iconOnly
+                icon={action.icon}
+              ></Button> */}
+            </Menu.Button>
+            <Menu.Items>
+              <Menu.Item as="div" className="absolute">
+                <ColorSelector noteId={props.id} />
+              </Menu.Item>
+            </Menu.Items>
+          </Menu>
+        );
       return (
         <Button
           key={action.id}

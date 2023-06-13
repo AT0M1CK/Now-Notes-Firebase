@@ -6,9 +6,8 @@ import NoteList from "./NoteList";
 import { ref, push, set, get, child, remove } from "firebase/database";
 import { database } from "../../firebase/firebaseConfig";
 import { NoteCreatorContext } from "../Contexts/NoteCreatorContext";
-import ColorSelector from "../ColorSelector";
 
-const NoteCreator = () => {
+const NoteManager = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [notesList, setNotesList] = useState<Note[]>([]);
 
@@ -47,6 +46,16 @@ const NoteCreator = () => {
   //       },
   //     },
   //   ];
+
+  const colorChangeHandler = (id: string, color: string) => {
+    const notesListCopy = [...notesList];
+    notesListCopy.forEach((note) => {
+      if (note.id === id) {
+        note.config.color = color;
+        setNotesList(notesListCopy);
+      }
+    });
+  };
 
   const createNote = (header: string, description: string) => {
     const note: Note = {
@@ -122,7 +131,13 @@ const NoteCreator = () => {
 
   return (
     <>
-      <NoteCreatorContext.Provider value={{ deleteNote: deleteSingleNote }}>
+      <NoteCreatorContext.Provider
+        value={{
+          deleteNote: deleteSingleNote,
+          changeColor: colorChangeHandler,
+          notesList: notesList,
+        }}
+      >
         <div className="flex justify-center">
           <form onSubmit={handleSubmit(onFormSubmit)}>
             <div className="flex flex-col mb-3 justify-center px-4 py-3 rounded-md items-center shadow-md border">
@@ -184,11 +199,10 @@ const NoteCreator = () => {
         </div>
         <div className="flex flex-wrap">
           <NoteList notes={notesList} />
-          <ColorSelector />
         </div>
       </NoteCreatorContext.Provider>
     </>
   );
 };
 
-export default NoteCreator;
+export default NoteManager;

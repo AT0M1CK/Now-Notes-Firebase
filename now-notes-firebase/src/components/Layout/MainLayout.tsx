@@ -9,7 +9,7 @@ import {
 import { TbArchive, TbEdit } from "react-icons/tb";
 import { MainContext } from "../Contexts/MainContext";
 
-import NoteCreator from "../UI/NoteCreator";
+import NoteCreator from "../UI/NoteManager";
 
 export type MenuItem = {
   id: number;
