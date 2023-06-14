@@ -22,8 +22,9 @@ export type ButtonPropsType = {
   radius?: "xs" | "sm" | "md" | "lg" | "xl" | "normal" | "full" | "rightFull";
   children?: ReactNode;
   onClick?: () => void;
-  onMenuClick?: (id: number) => void;
+  onMenuClick?: (id: number, component?: ReactNode) => void;
   customCssProps?: string;
+  component?: ReactNode;
 };
 
 const Button = (props: ButtonPropsType) => {
@@ -46,6 +47,7 @@ const Button = (props: ButtonPropsType) => {
     buttonId,
     iconPaddingFull,
     isDisabled,
+    component,
     padding,
     buttonSize,
     onClick,
@@ -149,7 +151,7 @@ const Button = (props: ButtonPropsType) => {
         disabled={isDisabled}
         onClick={() => {
           if (onClick) onClick();
-          if (onMenuClick) onMenuClick(buttonId!);
+          if (onMenuClick) onMenuClick(buttonId!, component);
         }}
         className={` ${customCssProps} ${
           (variants as any)[variant]
