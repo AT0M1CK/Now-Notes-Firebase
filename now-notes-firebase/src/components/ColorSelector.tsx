@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { NoteCreatorContext } from "./Contexts/NoteCreatorContext";
 
 export type colorButtonType = {
@@ -8,9 +8,10 @@ export type colorButtonType = {
 
 const ColorSelector = (props: { noteId: string; noteColor: string }) => {
   const { changeColor } = useContext(NoteCreatorContext);
-  const [currentSelectedColor, setCurrentSelectedColor] = useState(
-    props.noteColor
-  );
+  // const [currentSelectedColor, setCurrentSelectedColor] = useState(
+  //   props.noteColor
+  // );
+  const currentSelectedColor = props.noteColor;
 
   const colorButtonList: colorButtonType[] = [
     {
