@@ -22,7 +22,7 @@ export type ButtonPropsType = {
   radius?: "xs" | "sm" | "md" | "lg" | "xl" | "normal" | "full" | "rightFull";
   children?: ReactNode;
   onClick?: () => void;
-  onMenuClick?: (id: number, component?: ReactNode) => void;
+  onMenuClick?: (id: number) => void;
   customCssProps?: string;
   component?: ReactNode;
 };
@@ -151,7 +151,7 @@ const Button = (props: ButtonPropsType) => {
         disabled={isDisabled}
         onClick={() => {
           if (onClick) onClick();
-          if (onMenuClick) onMenuClick(buttonId!, component);
+          if (onMenuClick) onMenuClick(buttonId!);
         }}
         className={` ${customCssProps} ${
           (variants as any)[variant]

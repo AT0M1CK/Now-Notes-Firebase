@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
 import TextInput from "./TextInput";
 import { useForm } from "react-hook-form";
-import { Note } from "../Layout/MainLayout";
+import { Note, NoteManagerState } from "../Layout/MainLayout";
 import NoteList from "./NoteList";
 import { ref, push, set, get, child, remove, update } from "firebase/database";
-import { database } from "../../firebase/firebaseConfig";
+import { auth, database } from "../../firebase/firebaseConfig";
 import { NoteCreatorContext } from "../Contexts/NoteCreatorContext";
+import { NoteManagerActivePath, remotePath } from "../../utils/utils";
 
-const NoteManager = () => {
+const NoteManager = (props: { activePath: NoteManagerActivePath }) => {
   const [isCreating, setIsCreating] = useState(false);
   const [notesList, setNotesList] = useState<Note[]>([]);
+  const [userId, setUserId] = useState("");
+
+  const { activePath } = props;
 
   const {
     register,
@@ -74,7 +78,10 @@ const NoteManager = () => {
       },
     };
     setNotesList([...notesList, note]);
-    const noteListRef = ref(database, "/Notes/active");
+    // const path = "/" + userId + activePath.path;
+    // console.log("path", path);
+
+    const noteListRef = ref(database, activePath.path);
     const newNoteRef = push(noteListRef);
     note.id = newNoteRef.key!;
     console.log(newNoteRef.key);
@@ -93,11 +100,6 @@ const NoteManager = () => {
   };
 
   //Update notes
-  const changeNoteColor = (id: string) => {
-    const newNoteKey = push(child(ref(database), `/Notes/active/${id}`)).key;
-    const updates = {};
-  };
-
   //Delete signle note
   const deleteSingleNote = async (id: string) => {
     const noteDeleteRef = ref(database, `/Notes/active/${id}`);
@@ -126,14 +128,20 @@ const NoteManager = () => {
 
   useEffect(() => {
     const dbRef = ref(database);
-    get(child(dbRef, "/Notes/active")).then((snapshot) => {
+    get(child(dbRef, activePath.path)).then((snapshot) => {
       if (snapshot.exists()) {
         const activeNotes = Object.values(snapshot.val());
         console.log(snapshot.val());
         setNotesList(activeNotes as Note[]);
       }
     });
-  }, []);
+  }, [activePath]);
+
+  useEffect(() => {
+    const user = auth.currentUser;
+    if (auth.currentUser) setUserId(auth.currentUser?.uid);
+    console.log("user", user);
+  }, [auth.currentUser]);
 
   return (
     <>

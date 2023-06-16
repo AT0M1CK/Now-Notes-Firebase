@@ -8,12 +8,8 @@ import {
 } from "react-icons/md";
 import { TbArchive, TbEdit } from "react-icons/tb";
 import { MainContext } from "../Contexts/MainContext";
-
 import NoteManager from "../UI/NoteManager";
-import LabelEditor from "../LabelEditor";
-import TrashManager from "../TrashManager";
-import ArchiveManager from "../ArchiveManager";
-import RemindersManager from "../RemindersManager";
+import { NoteManagerActivePath, remotePath } from "../../utils/utils";
 
 export type MenuItem = {
   id: number;
@@ -21,6 +17,12 @@ export type MenuItem = {
   icon: ReactNode;
   component?: ReactNode;
 };
+
+export enum NoteManagerState {
+  ACTIVE,
+  ARCHIVE,
+  TRASH,
+}
 
 export type Note = {
   id: string;
@@ -38,17 +40,26 @@ export type Note = {
 
 const MainLayout = () => {
   const [headerTitle, setHeaderTitle] = useState("Now Notes");
-  const [currentComponent, setCurrentComponent] = useState<ReactNode>(
-    <NoteManager />
-  );
+  const [currentNoteManagerState, setCurrentNoteManagerState] =
+    useState<NoteManagerState>(NoteManagerState.ACTIVE);
+
+  const [currentActivePath, setCurrentActivePath] =
+    useState<NoteManagerActivePath>({
+      name: "ACTIVE",
+      path: remotePath.active,
+    });
 
   const titleSetter = (title: string) => {
     setHeaderTitle(title);
   };
 
-  const activeComponentHandler = (component: ReactNode) => {
-    setCurrentComponent(component);
-    console.log("currentComponent", currentComponent);
+  const noteManagerStateChangeHandler = (newState: NoteManagerState) => {
+    setCurrentNoteManagerState(newState);
+    console.log(currentNoteManagerState);
+  };
+
+  const noteManagerActivePathHandler = (newState: NoteManagerActivePath) => {
+    setCurrentActivePath(newState);
   };
 
   const menuIconSize = 24;
@@ -58,31 +69,26 @@ const MainLayout = () => {
       id: 0,
       title: "Notes",
       icon: <MdLightbulbOutline size={menuIconSize} />,
-      component: <NoteManager />,
     },
     {
       id: 1,
       title: "Reminders",
       icon: <MdOutlineNotifications size={menuIconSize} />,
-      component: <RemindersManager />,
     },
     {
       id: 2,
       title: "Edit Labels",
       icon: <TbEdit size={menuIconSize} />,
-      component: <LabelEditor />,
     },
     {
       id: 3,
       title: "Archive",
       icon: <TbArchive size={menuIconSize} />,
-      component: <ArchiveManager />,
     },
     {
       id: 4,
       title: "Trash",
       icon: <MdDeleteOutline size={menuIconSize} />,
-      component: <TrashManager />,
     },
   ];
 
@@ -99,15 +105,16 @@ const MainLayout = () => {
           <div className="flex-1 flex flex-col overflow-y-hidden sm:flex-row">
             <main className="flex-1 min-w-0 overflow-y-auto bg-white m-2">
               <div className="flex flex-col  m-3">
-                {/* <NoteCreator /> */}
-                {currentComponent}
+                <NoteManager activePath={currentActivePath} />
               </div>
             </main>
 
             <nav className="order-first flex-none pt-2 sm:w-72 bg-white">
               <Sidebar
                 menuList={menuList}
-                selectHandler={activeComponentHandler}
+                activePathChangeHandler={noteManagerActivePathHandler}
+                stateChangeHandler={noteManagerStateChangeHandler}
+                selectHandler={titleSetter}
               />
             </nav>
           </div>

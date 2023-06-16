@@ -1,36 +1,54 @@
-import { ReactNode, useContext, useEffect, useState } from "react";
-import { MenuItem } from "./Layout/MainLayout";
+import { useContext, useState } from "react";
+import { MenuItem, NoteManagerState } from "./Layout/MainLayout";
 import Button from "./UI/Button";
 import { MainContext } from "./Contexts/MainContext";
+import { NoteManagerActivePath, remotePath } from "../utils/utils";
 
 const Sidebar = (props: {
   menuList: MenuItem[];
-  selectHandler?: (component: ReactNode) => void;
+  selectHandler?: (title: string) => void;
+  activePathChangeHandler?: (newState: NoteManagerActivePath) => void;
+  stateChangeHandler?: (newState: NoteManagerState) => void;
 }) => {
   const { setTitle } = useContext(MainContext);
   const [currentSelectedMenu, setCurrentSelectedMenu] = useState(0);
 
-  const { menuList, selectHandler } = props;
+  const { menuList, stateChangeHandler, activePathChangeHandler } = props;
 
-  const menuHandler = (id: number, component: ReactNode) => {
+  const menuHandler = (id: number) => {
     setCurrentSelectedMenu(id);
-    if (selectHandler) {
-      selectHandler(component);
-    }
-    sessionStorage.setItem("currentSelectedMenu", id.toString());
+    stateSetter(id);
     if (setTitle) {
       setTitle(menuList[id].title);
     }
   };
 
-  useEffect(() => {
-    const currentId = sessionStorage.getItem("currentSelectedMenu");
-    if (currentId) {
-      const id = parseInt(currentId);
-      console.log("id", menuList);
-      if (menuList[0].id) menuHandler(id, menuList[0].component);
+  const stateSetter = (id: number) => {
+    if (id === 3) {
+      if (stateChangeHandler) stateChangeHandler(NoteManagerState.ARCHIVE);
+      if (activePathChangeHandler)
+        activePathChangeHandler({ name: "ARCHIVE", path: remotePath.archive });
     }
-  }, []);
+    if (id === 4) {
+      if (stateChangeHandler) stateChangeHandler(NoteManagerState.TRASH);
+      if (activePathChangeHandler)
+        activePathChangeHandler({ name: "TRASH", path: remotePath.trash });
+    }
+    if (id === 0) {
+      if (stateChangeHandler) stateChangeHandler(NoteManagerState.ACTIVE);
+      if (activePathChangeHandler)
+        activePathChangeHandler({ name: "ACTIVE", path: remotePath.active });
+    }
+  };
+
+  // useEffect(() => {
+  //   const currentId = sessionStorage.getItem("currentSelectedMenu");
+  //   if (currentId) {
+  //     const id = parseInt(currentId);
+  //     console.log("id", menuList);
+  //     if (menuList[0].id) menuHandler(id, menuList[0].component);
+  //   }
+  // }, []);
 
   //Build Menu items
   const buildMenu = () => {
