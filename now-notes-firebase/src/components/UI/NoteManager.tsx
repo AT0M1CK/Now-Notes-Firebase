@@ -8,17 +8,14 @@ import { auth, database } from "../../firebase/firebaseConfig";
 import { NoteCreatorContext } from "../Contexts/NoteCreatorContext";
 import { NoteManagerActivePath, remotePath } from "../../utils/utils";
 
-const NoteManager = (props: {
-  activePath: NoteManagerActivePath;
-  showNoteCreator: boolean;
-}) => {
+const NoteManager = (props: { activePath: NoteManagerActivePath }) => {
   const [isCreating, setIsCreating] = useState(false);
   const [notesList, setNotesList] = useState<Note[]>([]);
 
   // const [archiveNotesList, setArchiveNotesList] = useState<Note[]>([]);
   // const [userId, setUserId] = useState("");
 
-  const { activePath, showNoteCreator } = props;
+  const { activePath } = props;
 
   const {
     register,
@@ -121,6 +118,22 @@ const NoteManager = (props: {
     });
   };
 
+  const trashSingleNote = (id: string) => {
+    const notesListCopy = [...notesList];
+    notesListCopy.forEach((note) => {
+      if (note.id === id) {
+        const noteCopy = Object.assign({}, note);
+        const noteArchiveRef = ref(database, remotePath.trash);
+        const newArchiveRef = push(noteArchiveRef);
+        noteCopy.id = newArchiveRef.key!;
+        console.log(newArchiveRef.key);
+        set(newArchiveRef, noteCopy).then(() => {
+          deleteSingleNote(id);
+        });
+      }
+    });
+  };
+
   //Delete note from local notes list
   const deleteLocalNote = (id: string) => {
     const notesListCopy = [...notesList];
@@ -184,11 +197,12 @@ const NoteManager = (props: {
           deleteNote: deleteSingleNote,
           changeColor: colorChangeHandler,
           archiveNote: archiveSingleNote,
+          trashNote: trashSingleNote,
         }}
       >
         <div className="flex justify-center">
           <form onSubmit={handleSubmit(onFormSubmit)}>
-            {showNoteCreator && (
+            {activePath.name === "ACTIVE" && (
               <div className="flex flex-col mb-3 justify-center px-4 py-3 rounded-md items-center shadow-md border">
                 <div>
                   {!isCreating && (

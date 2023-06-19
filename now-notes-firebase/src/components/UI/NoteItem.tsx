@@ -14,7 +14,7 @@ export type ActionsButtonType = {
 };
 
 const NoteItem = (props: Note) => {
-  const { deleteNote, archiveNote } = useContext(NoteCreatorContext);
+  const { deleteNote, archiveNote, trashNote } = useContext(NoteCreatorContext);
 
   //Actions Button List
   const actionsList: ActionsButtonType[] = [
@@ -45,7 +45,7 @@ const NoteItem = (props: Note) => {
       id: 5,
       icon: <MdMoreVert size={18} />,
       actionCallback: () => {
-        if (deleteNote) deleteNote(props.id);
+        if (trashNote) trashNote(props.id);
       },
     },
   ];

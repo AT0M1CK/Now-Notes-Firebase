@@ -40,7 +40,7 @@ export type Note = {
 
 const MainLayout = () => {
   const [headerTitle, setHeaderTitle] = useState("Now Notes");
-  const [isNoteCreator, setIsNoteCreator] = useState(true);
+
   const [currentNoteManagerState, setCurrentNoteManagerState] =
     useState<NoteManagerState>(NoteManagerState.ACTIVE);
 
@@ -52,10 +52,6 @@ const MainLayout = () => {
 
   const titleSetter = (title: string) => {
     setHeaderTitle(title);
-  };
-
-  const noteCreatorActiveHandler = (newState: boolean) => {
-    setIsNoteCreator(newState);
   };
 
   const noteManagerStateChangeHandler = (newState: NoteManagerState) => {
@@ -110,10 +106,7 @@ const MainLayout = () => {
           <div className="flex-1 flex flex-col overflow-y-hidden sm:flex-row">
             <main className="flex-1 min-w-0 overflow-y-auto bg-white m-2">
               <div className="flex flex-col  m-3">
-                <NoteManager
-                  activePath={currentActivePath}
-                  showNoteCreator={isNoteCreator}
-                />
+                <NoteManager activePath={currentActivePath} />
               </div>
             </main>
 
@@ -123,7 +116,6 @@ const MainLayout = () => {
                 activePathChangeHandler={noteManagerActivePathHandler}
                 stateChangeHandler={noteManagerStateChangeHandler}
                 selectHandler={titleSetter}
-                createNoteStateSetter={noteCreatorActiveHandler}
               />
             </nav>
           </div>
