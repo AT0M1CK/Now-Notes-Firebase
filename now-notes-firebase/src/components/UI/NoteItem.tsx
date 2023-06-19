@@ -14,7 +14,7 @@ export type ActionsButtonType = {
 };
 
 const NoteItem = (props: Note) => {
-  const { deleteNote } = useContext(NoteCreatorContext);
+  const { deleteNote, archiveNote } = useContext(NoteCreatorContext);
 
   //Actions Button List
   const actionsList: ActionsButtonType[] = [
@@ -37,6 +37,9 @@ const NoteItem = (props: Note) => {
     {
       id: 4,
       icon: <MdOutlineArchive size={18} />,
+      actionCallback: () => {
+        if (archiveNote) archiveNote(props.id);
+      },
     },
     {
       id: 5,

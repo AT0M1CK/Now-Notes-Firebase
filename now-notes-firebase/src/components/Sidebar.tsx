@@ -3,21 +3,39 @@ import { MenuItem, NoteManagerState } from "./Layout/MainLayout";
 import Button from "./UI/Button";
 import { MainContext } from "./Contexts/MainContext";
 import { NoteManagerActivePath, remotePath } from "../utils/utils";
+import { NoteCreatorContext } from "./Contexts/NoteCreatorContext";
 
 const Sidebar = (props: {
   menuList: MenuItem[];
   selectHandler?: (title: string) => void;
   activePathChangeHandler?: (newState: NoteManagerActivePath) => void;
   stateChangeHandler?: (newState: NoteManagerState) => void;
+  createNoteStateSetter?: (newState: boolean) => void;
 }) => {
   const { setTitle } = useContext(MainContext);
+
   const [currentSelectedMenu, setCurrentSelectedMenu] = useState(0);
 
-  const { menuList, stateChangeHandler, activePathChangeHandler } = props;
+  const {
+    menuList,
+    stateChangeHandler,
+    activePathChangeHandler,
+    createNoteStateSetter,
+  } = props;
 
   const menuHandler = (id: number) => {
     setCurrentSelectedMenu(id);
     stateSetter(id);
+    if (id === 0) {
+      if (createNoteStateSetter) {
+        createNoteStateSetter(true);
+      }
+    } else {
+      if (createNoteStateSetter) {
+        createNoteStateSetter(false);
+      }
+    }
+
     if (setTitle) {
       setTitle(menuList[id].title);
     }

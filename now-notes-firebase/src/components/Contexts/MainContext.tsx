@@ -5,6 +5,7 @@ export type MainContextType = {
   userId?: string;
   setUserId?: (userId: string) => void;
   setTitle?: (title: string) => void;
+  noteCreatorActiveHandler?: (newState: boolean) => void;
 };
 
 export const MainContext = createContext<MainContextType>({});
