@@ -10,6 +10,8 @@ export type TextInputProps = {
   variant?: "outline" | "filled" | "flushed" | "unstyled";
   Disabled?: boolean;
   readonly?: boolean;
+  isNoteInput?: boolean;
+
   // required?: boolean;
   size: "lg" | "md" | "sm" | "xs";
   name?: string;
@@ -51,11 +53,15 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
   return (
     <>
       <input
-        className={`${(colorScheme as any)[props.colorScheme]} ${
-          (radius as any)[props.rounded]
-        } mt-3 w-full p-2 align-middle  text-md tracking-wide text-gray-700 disabled:cursor-not-allowed disabled:bg-gray-400 ${
-          (size as any)[props.size]
-        } ${(borderScheme as any)[props.borderScheme]}`}
+        className={
+          props.isNoteInput
+            ? `w-full bg-transparent text-gray-800 outline-none font-medium `
+            : `${(colorScheme as any)[props.colorScheme]} ${
+                (radius as any)[props.rounded]
+              } mt-3 w-full p-2 align-middle  text-md tracking-wide text-gray-700 disabled:cursor-not-allowed disabled:bg-gray-400 ${
+                (size as any)[props.size]
+              } ${(borderScheme as any)[props.borderScheme]}`
+        }
         type={props.type}
         disabled={props.Disabled}
         readOnly={props.readonly}

@@ -5,7 +5,7 @@ const NoteList = (props: { notes: Note[] }) => {
   return (
     <>
       {props.notes.map((note) => {
-        return <NoteItem key={note.id} {...note} />;
+        return <NoteItem key={note.id} SingleNote={note} />;
       })}
     </>
   );

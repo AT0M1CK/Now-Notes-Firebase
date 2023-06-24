@@ -10,6 +10,7 @@ import { TbArchive, TbEdit } from "react-icons/tb";
 import { MainContext } from "../Contexts/MainContext";
 import NoteManager from "../UI/NoteManager";
 import { NoteManagerActivePath, remotePath } from "../../utils/utils";
+import NoteMaker from "../NoteMaker";
 
 export type MenuItem = {
   id: number;
@@ -107,6 +108,7 @@ const MainLayout = () => {
             <main className="flex-1 min-w-0 overflow-y-auto bg-white m-2">
               <div className="flex flex-col  m-3">
                 <NoteManager activePath={currentActivePath} />
+                {/* <NoteMaker /> */}
               </div>
             </main>
 

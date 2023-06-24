@@ -8,9 +8,17 @@ import { auth, database } from "../../firebase/firebaseConfig";
 import { NoteCreatorContext } from "../Contexts/NoteCreatorContext";
 import { NoteManagerActivePath, remotePath } from "../../utils/utils";
 
+import { MdMoreVert, MdOutlineArchive, MdOutlineImage } from "react-icons/md";
+import { TbBellPlus, TbPalette, TbUserPlus } from "react-icons/tb";
+import { Menu } from "@headlessui/react";
+
+import Button from "./Button";
+import ActionPanel from "./ActionPanel";
+
 const NoteManager = (props: { activePath: NoteManagerActivePath }) => {
   const [isCreating, setIsCreating] = useState(false);
   const [notesList, setNotesList] = useState<Note[]>([]);
+  const [isBackdropActive, setIsBackdropActive] = useState(false);
 
   // const [archiveNotesList, setArchiveNotesList] = useState<Note[]>([]);
   // const [userId, setUserId] = useState("");
@@ -53,16 +61,102 @@ const NoteManager = (props: { activePath: NoteManagerActivePath }) => {
   //     },
   //   ];
 
-  const colorChangeHandler = (id: string, color: string) => {
+  // const creatorButtonList: ActionsButtonType[] = [
+  //   {
+  //     id: 0,
+  //     icon: <TbBellPlus size={18} />,
+  //   },
+  //   {
+  //     id: 1,
+  //     icon: <TbUserPlus size={18} />,
+  //   },
+  //   {
+  //     id: 2,
+  //     icon: <TbPalette size={18} />,
+  //   },
+  //   {
+  //     id: 3,
+  //     icon: <MdOutlineImage size={18} />,
+  //   },
+  //   {
+  //     id: 4,
+  //     icon: <MdOutlineArchive size={18} />,
+  //   },
+  //   {
+  //     id: 5,
+  //     icon: <MdMoreVert size={18} />,
+  //   },
+  // ];
+  // const buildCreatorButtonList = () => {
+  //   return creatorButtonList.map((button) => {
+  //     if (button.id === 2)
+  //       return (
+  //         <Menu
+  //           key={button.id}
+  //           as="div"
+  //           className="relative inline-block text-left"
+  //         >
+  //           <Menu.Button className="flex p-2 hover:bg-gray-200 rounded-full">
+  //             <TbPalette size={18} />
+  //             {/* <Button
+  //               customCssProps=" text-gray-600 "
+  //               type="button"
+  //               colorScheme="white"
+  //               radius="full"
+  //               variant="ghost"
+  //               padding="rounded"
+  //               onClick={action.actionCallback}
+  //               buttonSize="xs"
+  //               iconOnly
+  //               icon={action.icon}
+  //             ></Button> */}
+  //           </Menu.Button>
+  //           <Menu.Items>
+  //             <Menu.Item as="div" className="absolute">
+  //               {/* <ColorSelector
+  //                 noteId={props.id}
+  //                 noteColor={props.config.color}
+  //               /> */}
+  //             </Menu.Item>
+  //           </Menu.Items>
+  //         </Menu>
+  //       );
+  //     return (
+  //       <Button
+  //         key={button.id}
+  //         customCssProps=" text-gray-600 "
+  //         type="button"
+  //         colorScheme="white"
+  //         radius="full"
+  //         variant="ghost"
+  //         padding="rounded"
+  //         onClick={button.actionCallback}
+  //         buttonSize="xs"
+  //         iconOnly
+  //         icon={button.icon}
+  //       ></Button>
+  //     );
+  //   });
+  // };
+
+  const getNoteById = (id: string) => {
+    let selectedNote = {} as Note;
     const notesListCopy = [...notesList];
     notesListCopy.forEach((note) => {
       if (note.id === id) {
-        note.config.color = color;
-        setNotesList(notesListCopy);
-        const noteRef = ref(database, `/Notes/active/${note.id}`);
-        update(noteRef, note);
+        selectedNote = note;
       }
     });
+    return { note: selectedNote, notesListCopy };
+  };
+
+  const colorChangeHandler = (id: string, color: string) => {
+    const { note, notesListCopy } = getNoteById(id);
+
+    note.config.color = color;
+    setNotesList(notesListCopy);
+    const noteRef = ref(database, `/Notes/active/${note.id}`);
+    update(noteRef, note);
   };
 
   const createNote = (header: string, description: string) => {
@@ -167,9 +261,14 @@ const NoteManager = (props: { activePath: NoteManagerActivePath }) => {
 
   const onFormSubmit = (data: any) => {
     console.log(data);
-    createNote(data.header, data.body);
+    console.log("onBlur fired!");
+    if (data.header || data.body) {
+      createNote(data.header, data.body);
+    }
+
     setValue("header", "");
     setValue("body", "");
+    setIsCreating(false);
     // writeUserData(data.header, data.body);
   };
 
@@ -201,10 +300,15 @@ const NoteManager = (props: { activePath: NoteManagerActivePath }) => {
         }}
       >
         <div className="flex justify-center">
-          <form onSubmit={handleSubmit(onFormSubmit)}>
+          <form
+            onSubmit={handleSubmit(onFormSubmit)}
+            onBlur={handleSubmit(onFormSubmit)}
+          >
             {activePath.name === "ACTIVE" && (
-              <div className="flex flex-col mb-3 justify-center px-4 py-3 rounded-md items-center shadow-md border">
-                <div>
+              <div
+                className={`md:w-128 sm:w-96 flex flex-col mb-3 justify-center px-4 py-3 rounded-md  shadow-md shadow-gray-400 border`}
+              >
+                <div className="flex ">
                   {!isCreating && (
                     <div
                       className="flex justify-start font-medium"
@@ -216,7 +320,7 @@ const NoteManager = (props: { activePath: NoteManagerActivePath }) => {
                     </div>
                   )}
                   {isCreating && (
-                    <div>
+                    <div className="w-full">
                       <TextInput
                         type="text"
                         colorScheme="white"
@@ -227,12 +331,13 @@ const NoteManager = (props: { activePath: NoteManagerActivePath }) => {
                         register={register}
                         error={errors}
                         name="header"
+                        isNoteInput={true}
                         validationSchema={{
                           required: false,
                           // pattern:
                           //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                          patternError: "Invalid password.",
-                          requiredError: "Password cannot be empty",
+                          patternError: "",
+                          requiredError: "empty",
                         }}
                       />
                       <TextInput
@@ -245,17 +350,20 @@ const NoteManager = (props: { activePath: NoteManagerActivePath }) => {
                         register={register}
                         error={errors}
                         name="body"
+                        isNoteInput={true}
                         validationSchema={{
                           required: false,
                           // pattern:
                           //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
                           patternError: "Invalid password.",
-                          requiredError: "Password cannot be empty",
+                          requiredError: "empty",
                         }}
                       />
-                      <button type="submit" className="">
-                        Submit
-                      </button>
+                      <div className="flex justify-between">
+                        <button type="submit" className="">
+                          Submit
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>
