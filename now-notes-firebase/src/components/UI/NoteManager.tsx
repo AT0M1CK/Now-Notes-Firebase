@@ -14,6 +14,7 @@ import { Menu } from "@headlessui/react";
 
 import Button from "./Button";
 import ActionPanel from "./ActionPanel";
+import NoteMaker from "../NoteMaker";
 
 const NoteManager = (props: { activePath: NoteManagerActivePath }) => {
   const [isCreating, setIsCreating] = useState(false);
@@ -184,6 +185,11 @@ const NoteManager = (props: { activePath: NoteManagerActivePath }) => {
     set(newNoteRef, note);
   };
 
+  //notesList setter
+  const notesListSetterHandler = (newNote: Note) => {
+    setNotesList([...notesList, newNote]);
+  };
+
   //Add note to archive
   // const archiveLocalNote = (id: string) => {
   //   const noteListCopy = [...notesList];
@@ -299,7 +305,7 @@ const NoteManager = (props: { activePath: NoteManagerActivePath }) => {
           trashNote: trashSingleNote,
         }}
       >
-        <div className="flex justify-center">
+        {/* <div className="flex justify-center bg-slate-200">
           <form
             onSubmit={handleSubmit(onFormSubmit)}
             onBlur={handleSubmit(onFormSubmit)}
@@ -370,7 +376,10 @@ const NoteManager = (props: { activePath: NoteManagerActivePath }) => {
               </div>
             )}
           </form>
-        </div>
+        </div> */}
+        {activePath.name === "ACTIVE" && (
+          <NoteMaker notesListSetter={notesListSetterHandler} />
+        )}
         <div className="flex flex-wrap">
           <NoteList notes={notesList} />
         </div>

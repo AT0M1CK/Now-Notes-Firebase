@@ -8,7 +8,7 @@ import { database } from "../firebase/firebaseConfig";
 import { Note } from "./Layout/MainLayout";
 import { useState } from "react";
 
-const NoteMaker = () => {
+const NoteMaker = (props: { notesListSetter: (newNote: Note) => void }) => {
   const [notesList, setNotesList] = useState<Note[]>([]);
   const {
     register,
@@ -16,6 +16,8 @@ const NoteMaker = () => {
     formState: { errors },
     setValue,
   } = useForm();
+
+  const { notesListSetter } = props;
 
   const onFormSubmit = (data: any) => {
     console.log(data);
@@ -38,9 +40,10 @@ const NoteMaker = () => {
         color: "#ebd50e",
       },
     };
-    setNotesList([...notesList, note]);
+    // setNotesList([...notesList, note]);
     // const path = "/" + userId + activePath.path;
     // console.log("path", path);
+    notesListSetter(note);
 
     const noteListRef = ref(database, `/Notes/active/`);
     const newNoteRef = push(noteListRef);
